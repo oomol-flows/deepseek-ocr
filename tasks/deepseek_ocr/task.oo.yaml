@@ -24,8 +24,8 @@ inputs_def:
     description: "Custom prompt for OCR task"
     json_schema:
       type: string
-      default: "Transcribe the text in this image"
-    value: "Transcribe the text in this image"
+      ui:widget: "text"
+    value: ""
     nullable: false
 
   - handle: use_gpu
@@ -37,10 +37,11 @@ inputs_def:
     nullable: false
 
 outputs_def:
-  - handle: text
+  - handle: markdown
     description: "Extracted text from the image"
     json_schema:
       type: string
+      ui:widget: file
 
 executor:
   name: python

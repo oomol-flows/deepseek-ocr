@@ -8,6 +8,6 @@ nodes:
       - handle: resolution
         value: base
       - handle: prompt
-        value: "Transcribe all the text in this image"
+        value: "<image>\\n<|grounding|>Convert the document to markdown. "
       - handle: use_gpu
         value: true

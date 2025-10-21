@@ -6,7 +6,7 @@ class Inputs(typing.TypedDict):
     prompt: str
     use_gpu: bool
 class Outputs(typing.TypedDict):
-    text: typing.NotRequired[str]
+    markdown: typing.NotRequired[str]
 #endregion
 
 import os
@@ -18,7 +18,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from oocana import Context
 from transformers import AutoModel, AutoTokenizer
 import torch
-from PIL import Image
 import sys
 from io import StringIO
 from contextlib import contextmanager
@@ -229,17 +228,24 @@ def main(params: Inputs, context: Context) -> Outputs:
     else:
         text = ""
 
+    # Save markdown to oomol-storage
+    storage_dir = '/oomol-driver/oomol-storage/deepseek_ocr'
+    os.makedirs(storage_dir, exist_ok=True)
+
+    # Generate unique filename based on input image
+    import hashlib
+    image_hash = hashlib.md5(image_path.encode()).hexdigest()[:8]
+    markdown_filename = f"ocr_result_{image_hash}.md"
+    markdown_path = os.path.join(storage_dir, markdown_filename)
+
+    # Write markdown content
+    with open(markdown_path, 'w', encoding='utf-8') as f:
+        f.write(text)
+
     # Clean up temporary directory
     import shutil
     shutil.rmtree(output_dir, ignore_errors=True)
 
-    # Preview result as markdown
-    preview_content = f"# OCR Result\n\n**Image:** {os.path.basename(image_path)}\n\n**Resolution:** {resolution}\n\n**Extracted Text:**\n\n{text}"
-    context.preview({
-        "type": "markdown",
-        "data": preview_content
-    })
-
     return {
-        "text": text
+        "markdown": markdown_path
     }
