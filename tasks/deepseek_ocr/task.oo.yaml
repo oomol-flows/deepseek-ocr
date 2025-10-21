@@ -1,13 +1,13 @@
 inputs_def:
   - handle: image
-    description: "Image file to perform OCR on"
+    description: "%image-file-to-perform-ocr-on%"
     json_schema:
       type: string
       ui:widget: file
     nullable: false
 
   - handle: resolution
-    description: "Resolution mode for OCR processing"
+    description: "%resolution-mode-for-ocr-processing%"
     json_schema:
       type: string
       enum:
@@ -21,7 +21,7 @@ inputs_def:
     nullable: false
 
   - handle: prompt
-    description: "Custom prompt for OCR task"
+    description: "%custom-prompt-for-ocr-task%"
     json_schema:
       type: string
       ui:widget: "text"
@@ -29,7 +29,7 @@ inputs_def:
     nullable: false
 
   - handle: use_gpu
-    description: "Use GPU acceleration (CUDA) for processing"
+    description: "%use-gpu-acceleration-cuda-for-processing%"
     json_schema:
       type: boolean
       default: true
@@ -49,7 +49,6 @@ executor:
     entry: __init__.py
     spawn: false
 
-title: "DeepSeek OCR"
+title: "%deepseek-ocr%"
 icon: ":carbon:document-tasks:"
-description: "Extract text from images using DeepSeek-OCR vision-language model.
-  Supports multiple resolution modes and GPU acceleration."
+description: "%extract-text-from-images-using-deepseek-ocr-vision-language-mode%"

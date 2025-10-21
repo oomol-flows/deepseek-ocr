@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: poetry add pandas
@@ -8,6 +8,6 @@ scripts:
 name: deepseek-ocr
 repository: https://github.com/oomol-flows/deepseek-ocr
 releaseNotes: init
-displayName: DeepSeek OCR
+displayName: "%display-name%"
 icon: ./icon.png
 description: "%deepseek-ocr-ocr-markdown%"

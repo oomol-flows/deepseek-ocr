@@ -1,3 +1,11 @@
 {
-  "deepseek-ocr-ocr-markdown": "DeepSeek OCR is a powerful image text recognition (OCR) tool that can automatically extract text content from images and save the results in Markdown format. Whether it’s text from scanned documents, screenshots, or photos, it can easily recognize and convert it into editable text."
+  "deepseek-ocr-ocr-markdown": "DeepSeek OCR is a powerful image text recognition (OCR) tool that can automatically extract text content from images and save the results in Markdown format. Whether it’s text from scanned documents, screenshots, or photos, it can easily recognize and convert it into editable text.",
+  "display-name": "DeepSeek OCR",
+  "test-deepseek-ocr": "Test DeepSeek OCR",
+  "deepseek-ocr": "DeepSeek OCR",
+  "extract-text-from-images-using-deepseek-ocr-vision-language-mode": "Extract text from images using DeepSeek-OCR vision-language model. Supports multiple resolution modes and GPU acceleration.",
+  "image-file-to-perform-ocr-on": "Image file to perform OCR on",
+  "resolution-mode-for-ocr-processing": "Resolution mode for OCR processing",
+  "custom-prompt-for-ocr-task": "Custom prompt for OCR task",
+  "use-gpu-acceleration-cuda-for-processing": "Use GPU acceleration (CUDA) for processing"
 }
