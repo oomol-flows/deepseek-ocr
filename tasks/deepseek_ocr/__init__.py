@@ -42,8 +42,6 @@ def load_model(use_gpu: bool):
 
     # Load model if not cached or device changed
     if _model is None or _current_device != device:
-        print(f"Loading DeepSeek-OCR model on {device}...")
-
         _tokenizer = AutoTokenizer.from_pretrained(
             model_name,
             trust_remote_code=True
@@ -60,9 +58,7 @@ def load_model(use_gpu: bool):
             try:
                 import flash_attn
                 model_kwargs['_attn_implementation'] = 'flash_attention_2'
-                print("Using Flash Attention 2 for GPU acceleration")
             except ImportError:
-                print("Flash attention not installed, using default attention (slower but functional)")
                 model_kwargs['_attn_implementation'] = 'eager'
 
         _model = AutoModel.from_pretrained(model_name, **model_kwargs)
@@ -75,7 +71,6 @@ def load_model(use_gpu: bool):
             _model = _model.to(device)
 
         _current_device = device
-        print("Model loaded successfully")
 
     return _model, _tokenizer, _current_device
 
@@ -121,8 +116,6 @@ def main(params: Inputs, context: Context) -> Outputs:
     # Get resolution config
     resolution = params['resolution']
     res_config = get_resolution_config(resolution)
-    print(f"Processing image: {os.path.basename(image_path)}")
-    print(f"Using resolution mode: {resolution}")
 
     # Prepare prompt
     prompt = params['prompt']
@@ -146,8 +139,8 @@ def main(params: Inputs, context: Context) -> Outputs:
     crop_mode = (resolution == 'gundam')
 
     # Run OCR inference using model.infer()
-    print("Running OCR inference...")
-    result = model.infer(
+    # Note: model.infer() returns text when save_results=True and reads from output file
+    model.infer(
         tokenizer,
         prompt=full_prompt,
         image_file=image_path,
@@ -155,18 +148,23 @@ def main(params: Inputs, context: Context) -> Outputs:
         base_size=base_size,
         image_size=image_size,
         crop_mode=crop_mode,
-        save_results=False,
+        save_results=True,  # Enable saving to get the result
         test_compress=False
     )
 
-    # Extract text from result
-    text = result if isinstance(result, str) else str(result)
+    # Read the result from the saved markdown file
+    result_file = os.path.join(output_dir, 'result.mmd')
+    text = ""
+
+    if os.path.exists(result_file):
+        with open(result_file, 'r', encoding='utf-8') as f:
+            text = f.read().strip()
+    else:
+        text = ""
 
     # Clean up temporary directory
     import shutil
     shutil.rmtree(output_dir, ignore_errors=True)
-
-    print(f"OCR completed. Extracted {len(text)} characters")
 
     # Preview result as markdown
     preview_content = f"# OCR Result\n\n**Image:** {os.path.basename(image_path)}\n\n**Resolution:** {resolution}\n\n**Extracted Text:**\n\n{text}"

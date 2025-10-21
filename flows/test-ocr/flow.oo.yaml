@@ -4,7 +4,7 @@ nodes:
     task: self::deepseek_ocr
     inputs_from:
       - handle: image
-        value: /oomol-driver/oomol-storage/test-document.png
+        value: /oomol-driver/oomol-storage/20251021-111208.png
       - handle: resolution
         value: base
       - handle: prompt

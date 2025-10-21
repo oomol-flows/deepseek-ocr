@@ -3,19 +3,7 @@ inputs_def:
     description: "Image file to perform OCR on"
     json_schema:
       type: string
-      ui:
-        widget: file
-        options:
-          filters:
-            - name: Images
-              extensions:
-                - png
-                - jpg
-                - jpeg
-                - bmp
-                - tiff
-                - webp
-          excludeAll: true
+      ui:widget: file
     nullable: false
 
   - handle: resolution
@@ -29,24 +17,24 @@ inputs_def:
         - large
         - gundam
       default: base
-    nullable: false
     value: base
+    nullable: false
 
   - handle: prompt
     description: "Custom prompt for OCR task"
     json_schema:
       type: string
       default: "Transcribe the text in this image"
-    nullable: false
     value: "Transcribe the text in this image"
+    nullable: false
 
   - handle: use_gpu
     description: "Use GPU acceleration (CUDA) for processing"
     json_schema:
       type: boolean
       default: true
-    nullable: false
     value: true
+    nullable: false
 
 outputs_def:
   - handle: text
@@ -62,4 +50,5 @@ executor:
 
 title: "DeepSeek OCR"
 icon: ":carbon:document-tasks:"
-description: "Extract text from images using DeepSeek-OCR vision-language model. Supports multiple resolution modes and GPU acceleration."
+description: "Extract text from images using DeepSeek-OCR vision-language model.
+  Supports multiple resolution modes and GPU acceleration."
