@@ -1,0 +1,13 @@
+title: "Test DeepSeek OCR"
+nodes:
+  - node_id: deepseek_ocr#1
+    task: self::deepseek_ocr
+    inputs_from:
+      - handle: image
+        value: /oomol-driver/oomol-storage/test-document.png
+      - handle: resolution
+        value: base
+      - handle: prompt
+        value: "Transcribe all the text in this image"
+      - handle: use_gpu
+        value: true
