@@ -5,3 +5,9 @@ scripts:
   bootstrap: |
     npm install
     poetry install --no-root
+name: deepseek-ocr
+repository: https://github.com/oomol-flows/deepseek-ocr
+releaseNotes: init
+displayName: DeepSeek OCR
+icon: ./icon.png
+description: "%deepseek-ocr-ocr-markdown%"
