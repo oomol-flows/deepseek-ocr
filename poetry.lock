@@ -1986,7 +1986,10 @@ h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[extras]
+gpu = []
+
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "02594fc54354a300ed1865ac984d2d39bbedca1dbf431d0f9b911800ce1aa65e"
+content-hash = "91966d09826530a6b658cbf96e99eef537cb21ee8ad0b517cb8dea8a3bce4b12"
