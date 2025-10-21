@@ -9,11 +9,76 @@ class Outputs(typing.TypedDict):
     text: typing.NotRequired[str]
 #endregion
 
+import os
+# Set environment variables to suppress verbose output before importing other libraries
+os.environ['TRANSFORMERS_VERBOSITY'] = 'error'
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 from oocana import Context
 from transformers import AutoModel, AutoTokenizer
 import torch
 from PIL import Image
-import os
+import sys
+from io import StringIO
+from contextlib import contextmanager
+import logging
+import warnings
+
+# Suppress warnings
+warnings.filterwarnings('ignore')
+
+# Set logging levels
+logging.getLogger().setLevel(logging.ERROR)
+logging.getLogger('transformers').setLevel(logging.ERROR)
+logging.getLogger('torch').setLevel(logging.ERROR)
+
+@contextmanager
+def suppress_output():
+    """Context manager to suppress stdout and stderr output at file descriptor level"""
+    import builtins
+
+    # Save original print and file descriptors
+    _original_print = builtins.print
+    stdout_fd = sys.stdout.fileno()
+    stderr_fd = sys.stderr.fileno()
+
+    # Duplicate original file descriptors
+    stdout_dup = os.dup(stdout_fd)
+    stderr_dup = os.dup(stderr_fd)
+
+    # Open /dev/null
+    devnull = os.open(os.devnull, os.O_WRONLY)
+
+    try:
+        # Override print function
+        builtins.print = lambda *args, **kwargs: None
+
+        # Redirect file descriptors to /dev/null
+        os.dup2(devnull, stdout_fd)
+        os.dup2(devnull, stderr_fd)
+
+        # Flush to ensure all buffered data is written
+        sys.stdout.flush()
+        sys.stderr.flush()
+
+        yield
+    finally:
+        # Flush again before restoring
+        sys.stdout.flush()
+        sys.stderr.flush()
+
+        # Restore file descriptors
+        os.dup2(stdout_dup, stdout_fd)
+        os.dup2(stderr_dup, stderr_fd)
+
+        # Close duplicates and devnull
+        os.close(stdout_dup)
+        os.close(stderr_dup)
+        os.close(devnull)
+
+        # Restore print function
+        builtins.print = _original_print
 
 # Global model cache
 _model = None
@@ -42,35 +107,36 @@ def load_model(use_gpu: bool):
 
     # Load model if not cached or device changed
     if _model is None or _current_device != device:
-        _tokenizer = AutoTokenizer.from_pretrained(
-            model_name,
-            trust_remote_code=True
-        )
+        with suppress_output():
+            _tokenizer = AutoTokenizer.from_pretrained(
+                model_name,
+                trust_remote_code=True
+            )
 
-        # Load model with appropriate settings
-        model_kwargs = {
-            'trust_remote_code': True,
-            'use_safetensors': True
-        }
+            # Load model with appropriate settings
+            model_kwargs = {
+                'trust_remote_code': True,
+                'use_safetensors': True
+            }
 
-        # Check if flash attention is available for GPU
-        if device == 'cuda':
-            try:
-                import flash_attn
-                model_kwargs['_attn_implementation'] = 'flash_attention_2'
-            except ImportError:
-                model_kwargs['_attn_implementation'] = 'eager'
+            # Check if flash attention is available for GPU
+            if device == 'cuda':
+                try:
+                    import flash_attn
+                    model_kwargs['_attn_implementation'] = 'flash_attention_2'
+                except ImportError:
+                    model_kwargs['_attn_implementation'] = 'eager'
 
-        _model = AutoModel.from_pretrained(model_name, **model_kwargs)
-        _model = _model.eval()
+            _model = AutoModel.from_pretrained(model_name, **model_kwargs)
+            _model = _model.eval()
 
-        # Move to device and set dtype
-        if device == 'cuda':
-            _model = _model.cuda().to(torch.bfloat16)
-        else:
-            _model = _model.to(device)
+            # Move to device and set dtype
+            if device == 'cuda':
+                _model = _model.cuda().to(torch.bfloat16)
+            else:
+                _model = _model.to(device)
 
-        _current_device = device
+            _current_device = device
 
     return _model, _tokenizer, _current_device
 
@@ -140,17 +206,18 @@ def main(params: Inputs, context: Context) -> Outputs:
 
     # Run OCR inference using model.infer()
     # Note: model.infer() returns text when save_results=True and reads from output file
-    model.infer(
-        tokenizer,
-        prompt=full_prompt,
-        image_file=image_path,
-        output_path=output_dir,
-        base_size=base_size,
-        image_size=image_size,
-        crop_mode=crop_mode,
-        save_results=True,  # Enable saving to get the result
-        test_compress=False
-    )
+    with suppress_output():
+        model.infer(
+            tokenizer,
+            prompt=full_prompt,
+            image_file=image_path,
+            output_path=output_dir,
+            base_size=base_size,
+            image_size=image_size,
+            crop_mode=crop_mode,
+            save_results=True,  # Enable saving to get the result
+            test_compress=False
+        )
 
     # Read the result from the saved markdown file
     result_file = os.path.join(output_dir, 'result.mmd')
