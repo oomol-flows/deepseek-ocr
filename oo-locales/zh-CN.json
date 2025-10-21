@@ -1,6 +1,6 @@
 {
   "deepseek-ocr-ocr-markdown": "DeepSeek OCR 是一个强大的图像文字识别(OCR)工具,可以自动从图片中提取文字内容,并将结果保存为 Markdown 格式。无论是扫描的文档、截图还是照片中的文字,都能轻松识别并转换为可编辑的文本。",
-  "display-name": "DeepSeek OCR\n\n深寻 OCR",
+  "display-name": "DeepSeek OCR",
   "test-deepseek-ocr": "测试 DeepSeek OCR",
   "deepseek-ocr": "DeepSeek OCR",
   "extract-text-from-images-using-deepseek-ocr-vision-language-mode": "使用 DeepSeek-OCR 视觉语言模型从图像中提取文本。支持多种分辨率模式和 GPU 加速。",
