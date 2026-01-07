@@ -1,0 +1,44 @@
+inputs_def:
+  - handle: image_path
+    description: "%path-to-the-image-file-for-ocr%"
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+
+  - handle: llm
+    description: "%llm-model-configuration%"
+    json_schema:
+      ui:widget: llm::model
+    value:
+      model: deepseek-ocr
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
+    nullable: false
+
+  - group: Advanced Options
+    collapsed: true
+  - handle: prompt
+    description: "%custom-prompt-for-ocr-optional-uses-default-if-not-provided%"
+    json_schema:
+      type: string
+      ui:widget: text
+    value:
+    nullable: true
+
+outputs_def:
+  - handle: text
+    description: "%extracted-text-from-the-image%"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "%llm-ocr%"
+icon: ":carbon:image-search:"
+description: "%extract-text-from-images-using-llm-vision-models-supports-deepse%"

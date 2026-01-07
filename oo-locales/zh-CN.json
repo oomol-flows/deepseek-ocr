@@ -1,0 +1,13 @@
+{
+  "deepseek-ocr": "Deepseek OCR",
+  "extract-text-from-images-using-llm-vision-models-with-deepseek-o": "使用 LLM 视觉模型结合 DeepSeek OCR 进行图像文本提取，实现高精度光学字符识别",
+  "test-llm-ocr": "测试 LLM OCR",
+  "test-flow-for-llm-ocr-task-block": "LLM OCR 任务模块的测试流程",
+  "markdown-1": "Markdown 预览 #1",
+  "llm-ocr": "大模型 OCR",
+  "extract-text-from-images-using-llm-vision-models-supports-deepse": "使用 LLM 视觉模型从图像中提取文本（支持 deepseek-ocr）",
+  "path-to-the-image-file-for-ocr": "用于 OCR 的图像文件路径",
+  "llm-model-configuration": "LLM 模型配置",
+  "custom-prompt-for-ocr-optional-uses-default-if-not-provided": "自定义 OCR 提示（可选，如果未提供则使用默认值）",
+  "extracted-text-from-the-image": "从图片中提取的文本"
+}

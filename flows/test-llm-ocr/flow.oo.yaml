@@ -1,0 +1,25 @@
+title: "%test-llm-ocr%"
+description: "%test-flow-for-llm-ocr-task-block%"
+
+nodes:
+  - node_id: ocr#1
+    task: self::llm-ocr
+    inputs_from:
+      - handle: image_path
+        value: /oomol-driver/oomol-storage/covers/uuuu.png
+      - handle: llm
+        value:
+          model: deepseek-ocr
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: prompt
+        value:
+  - node_id: markdown_text_preview#1
+    title: "%markdown-1%"
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: ocr#1
+            output_handle: text
+    task: oomol-preview::markdown_text_preview

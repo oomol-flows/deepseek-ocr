@@ -1,0 +1,13 @@
+{
+  "deepseek-ocr": "Deepseek OCR",
+  "extract-text-from-images-using-llm-vision-models-with-deepseek-o": "Extract text from images using LLM vision models with DeepSeek OCR for accurate optical character recognition",
+  "test-llm-ocr": "Test LLM OCR",
+  "test-flow-for-llm-ocr-task-block": "Test flow for LLM OCR task block",
+  "markdown-1": "Markdown Preview #1",
+  "llm-ocr": "LLM OCR",
+  "extract-text-from-images-using-llm-vision-models-supports-deepse": "Extract text from images using LLM vision models (supports deepseek-ocr)",
+  "path-to-the-image-file-for-ocr": "Path to the image file for OCR",
+  "llm-model-configuration": "LLM model configuration",
+  "custom-prompt-for-ocr-optional-uses-default-if-not-provided": "Custom prompt for OCR (optional, uses default if not provided)",
+  "extracted-text-from-the-image": "Extracted text from the image"
+}
