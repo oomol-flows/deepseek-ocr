@@ -7,8 +7,8 @@ class Inputs(typing.TypedDict):
     prompt: str | None
     output_file: str | None
 class Outputs(typing.TypedDict):
-    markdown_file: str
-    text: str
+    markdown_file: typing.NotRequired[str]
+    text: typing.NotRequired[str]
 #endregion
 
 import base64
