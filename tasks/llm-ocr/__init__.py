@@ -57,7 +57,16 @@ async def main(params: Inputs, context: Context) -> Outputs:
     if custom_prompt and custom_prompt.strip():
         prompt_text = custom_prompt
     else:
-        prompt_text = "Convert the document to markdown."
+        prompt_text = """Convert this image to standard Markdown format. Follow these rules:
+
+1. Use proper Markdown syntax for all elements (headings, lists, tables, links, etc.)
+2. Preserve document structure and hierarchy with appropriate heading levels (# ## ###)
+3. Format tables using Markdown table syntax with proper alignment
+4. Convert lists to proper Markdown lists (- or 1. 2. 3.)
+5. Preserve code blocks with triple backticks and language tags if applicable
+6. Keep image references and links in Markdown format
+7. Maintain text formatting: **bold**, *italic*, `code`
+8. Return only the Markdown content without any explanations or meta-text"""
 
     # Initialize OpenAI client with OOMOL token
     client = OpenAI(
