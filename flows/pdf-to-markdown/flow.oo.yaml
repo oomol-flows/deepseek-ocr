@@ -1,0 +1,45 @@
+title: "%pdf-to-markdown%"
+description: "%convert-pdf-documents-to-markdown-using-ocr%"
+
+nodes:
+  - node_id: pdf2images#1
+    task: pdf::pdf2images
+    inputs_from:
+      - handle: pdf_path
+        value: /oomol-driver/oomol-storage/pdfs/manga_副本2.pdf
+      - handle: image_dir
+        value: null
+
+  - node_id: process_images#1
+    task: self::process-images-to-md
+    inputs_from:
+      - handle: image_dir
+        from_node:
+          - node_id: pdf2images#1
+            output_handle: image_dir
+      - handle: llm
+        value:
+          model: deepseek-ocr
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: prompt
+        value: null
+      - handle: output_file
+        value: null
+  - node_id: pdf-to-markdown-conversion#1
+    title: "PDF to Markdown Conversion #1"
+    inputs_from:
+      - handle: pdf_path
+        value: /oomol-driver/oomol-storage/pdf/watermarked_bg.pdf
+      - handle: output_file
+        value: null
+      - handle: llm
+        value:
+          model: deepseek-ocr
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: prompt
+        value: null
+    subflow: self::pdf-to-markdown-conversion

@@ -9,5 +9,17 @@
   "path-to-the-image-file-for-ocr": "Path to the image file for OCR",
   "llm-model-configuration": "LLM model configuration",
   "custom-prompt-for-ocr-optional-uses-default-if-not-provided": "Custom prompt for OCR (optional, uses default if not provided)",
-  "extracted-text-from-the-image": "Extracted text from the image"
+  "extracted-text-from-the-image": "Extracted text from the image",
+  "pdf-to-markdown": "PDF to Markdown",
+  "convert-pdf-documents-to-markdown-using-ocr": "Convert PDF documents to Markdown using OCR",
+  "process-images-to-markdown": "Process Images to Markdown",
+  "process-all-images-in-directory-with-ocr-and-combine-to-markdown": "Process all images in directory with OCR and combine to Markdown",
+  "directory-containing-images-to-process": "Directory containing images to process",
+  "custom-prompt-for-ocr-optional": "Custom prompt for OCR (optional)",
+  "output-markdown-file-path": "Output Markdown file path",
+  "path-to-generated-markdown-file": "Path to generated Markdown file",
+  "combined-markdown-text": "Combined Markdown text",
+  "pdf-to-markdown-conversion": "PDF to Markdown Conversion",
+  "convert-pdf-documents-to-markdown-using-ocr-subflow": "Reusable subflow for converting PDF documents to Markdown format using OCR technology",
+  "input-pdf-file-to-convert": "Input PDF file to convert"
 }

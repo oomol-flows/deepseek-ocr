@@ -1,0 +1,64 @@
+inputs_def:
+  - handle: image_dir
+    description: "%directory-containing-images-to-process%"
+    json_schema:
+      type: string
+      ui:widget: dir
+    nullable: false
+
+  - handle: llm
+    description: "%llm-model-configuration%"
+    json_schema:
+      ui:widget: llm::model
+    value:
+      model: deepseek-ocr
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
+    nullable: false
+
+  - group: Advanced Options
+    collapsed: true
+  - handle: prompt
+    description: "%custom-prompt-for-ocr-optional%"
+    json_schema:
+      type: string
+      ui:widget: text
+    value:
+    nullable: true
+
+  - handle: output_file
+    description: "%output-markdown-file-path%"
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        filters:
+          - name: Markdown
+            extensions:
+              - md
+              - markdown
+        excludeAll: true
+    value:
+    nullable: true
+
+outputs_def:
+  - handle: markdown_file
+    description: "%path-to-generated-markdown-file%"
+    json_schema:
+      type: string
+
+  - handle: text
+    description: "%combined-markdown-text%"
+    json_schema:
+      type: string
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+    spawn: false
+
+title: "%process-images-to-markdown%"
+icon: ":carbon:document-tasks:"
+description: "%process-all-images-in-directory-with-ocr-and-combine-to-markdown%"

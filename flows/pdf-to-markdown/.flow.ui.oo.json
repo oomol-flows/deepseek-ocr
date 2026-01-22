@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    {
+      "id": "pdf2images#1",
+      "position": {
+        "x": 100,
+        "y": 100
+      },
+      "data": {}
+    },
+    {
+      "id": "process_images#1",
+      "position": {
+        "x": 450,
+        "y": 100
+      },
+      "data": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "pdf2images#1-process_images#1",
+      "source": "pdf2images#1",
+      "target": "process_images#1",
+      "sourceHandle": "image_dir",
+      "targetHandle": "image_dir"
+    }
+  ]
+}

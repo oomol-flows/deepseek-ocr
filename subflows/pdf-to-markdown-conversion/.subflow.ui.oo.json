@@ -1,0 +1,45 @@
+{
+  "nodes": {
+    "pdf2images#1": {
+      "rfNode": {
+        "position": {
+          "x": 486,
+          "y": 0
+        }
+      }
+    },
+    "process_images#1": {
+      "rfNode": {
+        "position": {
+          "x": 972,
+          "y": 20.25
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 76.25
+        }
+      },
+      "sections": {
+        "subflowInput": {
+          "groupCollapsed": {
+            "Advanced Options": true
+          }
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 1458,
+          "y": 141.25
+        }
+      }
+    }
+  }
+}

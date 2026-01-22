@@ -1,4 +1,4 @@
-version: 0.0.5
+version: 0.0.6
 scripts:
   bootstrap: |
     npm install
@@ -6,6 +6,7 @@ scripts:
 icon: ./icon.png
 dependencies:
   oomol-preview: 0.2.0
+  pdf: 0.1.9
 name: deepseek-ocr
 displayName: "%deepseek-ocr%"
 description: "%extract-text-from-images-using-llm-vision-models-with-deepseek-o%"

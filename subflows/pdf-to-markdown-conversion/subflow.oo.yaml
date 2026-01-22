@@ -1,0 +1,112 @@
+inputs_def:
+  # === Primary Inputs ===
+  - handle: pdf_path
+    description: "%input-pdf-file-to-convert%"
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+    executor_name: python
+
+  # === Advanced Options ===
+  - group: Advanced Options
+    collapsed: true
+
+  - handle: output_file
+    description: "%output-markdown-file-path%"
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        filters:
+          - name: Markdown
+            extensions:
+              - md
+              - markdown
+        excludeAll: true
+    value: null
+    nullable: true
+    executor_name: python
+
+  - handle: llm
+    description: "%llm-model-configuration%"
+    json_schema:
+      ui:widget: llm::model
+    value:
+      model: deepseek-ocr
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
+    nullable: false
+    executor_name: python
+
+  - handle: prompt
+    description: "%custom-prompt-for-ocr-optional%"
+    json_schema:
+      type: string
+      ui:widget: text
+    value: null
+    nullable: true
+    executor_name: python
+
+outputs_def:
+  - handle: markdown_file
+    description: "%path-to-generated-markdown-file%"
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: python
+
+  - handle: markdown_content
+    description: "%combined-markdown-text%"
+    json_schema:
+      type: string
+    nullable: false
+    executor_name: python
+
+nodes:
+  - node_id: pdf2images#1
+    task: pdf::pdf2images
+    inputs_from:
+      - handle: pdf_path
+        from_flow:
+          - input_handle: pdf_path
+      - handle: image_dir
+        value: null
+    progress_weight: 40
+
+  - node_id: process_images#1
+    task: self::process-images-to-md
+    inputs_from:
+      - handle: image_dir
+        from_node:
+          - node_id: pdf2images#1
+            output_handle: image_dir
+      - handle: llm
+        from_flow:
+          - input_handle: llm
+      - handle: prompt
+        from_flow:
+          - input_handle: prompt
+      - handle: output_file
+        from_flow:
+          - input_handle: output_file
+    progress_weight: 60
+
+outputs_from:
+  - handle: markdown_file
+    from_node:
+      - node_id: process_images#1
+        output_handle: markdown_file
+
+  - handle: markdown_content
+    from_node:
+      - node_id: process_images#1
+        output_handle: text
+
+forward_previews:
+  - process_images#1
+
+title: "%pdf-to-markdown-conversion%"
+description: "%convert-pdf-documents-to-markdown-using-ocr-subflow%"
+icon: ":carbon:document-pdf:"
