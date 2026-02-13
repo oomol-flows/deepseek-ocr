@@ -1,4 +1,4 @@
-version: 0.0.6
+version: 0.0.7
 scripts:
   bootstrap: |
     npm install
@@ -11,4 +11,4 @@ name: deepseek-ocr
 displayName: "%deepseek-ocr%"
 description: "%extract-text-from-images-using-llm-vision-models-with-deepseek-o%"
 repository: https://github.com/oomol-flows/deepseek-ocr.git
-releaseNotes: init
+releaseNotes: "fix: ocr failed"

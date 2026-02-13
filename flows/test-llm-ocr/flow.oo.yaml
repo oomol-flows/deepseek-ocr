@@ -6,7 +6,7 @@ nodes:
     task: self::llm-ocr
     inputs_from:
       - handle: image_path
-        value: /oomol-driver/oomol-storage/covers/uuuu.png
+        value: /oomol-driver/oomol-storage/struc-info/h3.webp
       - handle: llm
         value:
           model: deepseek-ocr

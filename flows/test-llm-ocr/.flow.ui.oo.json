@@ -1,17 +1,18 @@
 {
   "nodes": {
     "ocr#1": {
+      "contentWidth": 476.015625,
       "rfNode": {
         "position": {
-          "x": 0,
-          "y": 0
+          "x": -23,
+          "y": -48
         }
       },
       "sections": {
         "inputs": {
           "height": {
             "prompt": {
-              "[]": 24
+              "[]": 123
             }
           }
         }
@@ -21,8 +22,8 @@
       "contentWidth": 450,
       "rfNode": {
         "position": {
-          "x": 537.3149904494786,
-          "y": 393.2718214526315
+          "x": 512.3149904494786,
+          "y": 254
         }
       }
     }
